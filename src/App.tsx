@@ -11,14 +11,28 @@ const options: SelectOption[] = [
 ];
 
 function App() {
+  // 单个选项
   const [value, setValue] = useState<SelectOption | undefined>(options[0]);
+  // 多个选项
+  const [values, setValues] = useState<SelectOption[]>([options[0]]);
 
   return (
-    <Select
-      value={value}
-      options={options}
-      onChange={(o: SelectOption | undefined) => setValue(o)}
-    />
+    <>
+      {/* 单个选项 */}
+      <Select
+        value={value}
+        options={options}
+        onChange={(o: SelectOption | undefined) => setValue(o)}
+      />
+      <br />
+      {/* 多个选项 */}
+      <Select
+        multiple
+        value={values}
+        options={options}
+        onChange={(o: SelectOption[]) => setValues(o)}
+      />
+    </>
   );
 }
 
