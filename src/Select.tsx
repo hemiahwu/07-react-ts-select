@@ -9,7 +9,9 @@ type SelectProps = {
 };
 
 export function Select({ value, onChange, options }: SelectProps) {
-  console.log(options);
+  const selectOption = (option: SelectOption) => {
+    onChange(option);
+  };
   return (
     <>
       <div className={styles.container}>
@@ -19,7 +21,13 @@ export function Select({ value, onChange, options }: SelectProps) {
         <div className={styles.caret}></div>
         <ul className={`${styles.options} ${styles.show}`}>
           {options.map((option: SelectOption, i: number) => (
-            <li key={i} className={styles.option}>
+            <li
+              onClick={(e) => {
+                selectOption(option);
+              }}
+              key={i}
+              className={styles.option}
+            >
               {option.label}
             </li>
           ))}
