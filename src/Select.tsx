@@ -1,19 +1,26 @@
 // import "./select.module.css";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./select.module.css";
 import { SelectOption } from "./types";
 
 type SelectProps = {
   options: SelectOption[];
-  value: SelectOption;
-  onChange: (value: SelectOption) => void;
+  value: SelectOption | undefined;
+  onChange: (value: SelectOption | undefined) => void;
 };
 
 export function Select({ value, onChange, options }: SelectProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // 选中选项
   const selectOption = (option: SelectOption) => {
     onChange(option);
+  };
+
+  // 删除选项
+  const clearOptions = (e: FormEvent) => {
+    e.stopPropagation();
+    onChange(undefined);
   };
   return (
     <>
@@ -23,8 +30,15 @@ export function Select({ value, onChange, options }: SelectProps) {
         onBlur={() => setIsOpen(false)}
         tabIndex={0}
       >
-        <span className={styles.value}>{value.label}</span>
-        <button className={styles["clear-btn"]}>&times;</button>
+        <span className={styles.value}>{value?.label}</span>
+        <button
+          className={styles["clear-btn"]}
+          onClick={(e) => {
+            clearOptions(e);
+          }}
+        >
+          &times;
+        </button>
         <div className={styles.divider}></div>
         <div className={styles.caret}></div>
 
@@ -32,7 +46,9 @@ export function Select({ value, onChange, options }: SelectProps) {
           {options.map((option: SelectOption, i: number) => (
             <li
               onClick={(e) => {
+                e.stopPropagation();
                 selectOption(option);
+                setIsOpen(false);
               }}
               key={i}
               className={styles.option}
