@@ -1,5 +1,5 @@
 // import "./select.module.css";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import styles from "./select.module.css";
 import { SelectOption } from "./types";
 
@@ -11,10 +11,14 @@ type SelectProps = {
 
 export function Select({ value, onChange, options }: SelectProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  // 高亮效果
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
 
+  // 控制选中效果的方法
+  const isOptionSelected = (option: SelectOption) => option === value;
   // 选中选项
   const selectOption = (option: SelectOption) => {
-    onChange(option);
+    option !== value && onChange(option);
   };
 
   // 删除选项
@@ -22,6 +26,12 @@ export function Select({ value, onChange, options }: SelectProps) {
     e.stopPropagation();
     onChange(undefined);
   };
+
+  // 解决bug
+  useEffect(() => {
+    isOpen && setHighlightedIndex(0);
+  }, [isOpen]);
+
   return (
     <>
       <div
@@ -51,7 +61,10 @@ export function Select({ value, onChange, options }: SelectProps) {
                 setIsOpen(false);
               }}
               key={i}
-              className={styles.option}
+              className={`${styles.option} ${
+                isOptionSelected(option) && styles.selected
+              } ${i === highlightedIndex && styles.highlighted}`}
+              onMouseEnter={() => setHighlightedIndex(i)}
             >
               {option.label}
             </li>
