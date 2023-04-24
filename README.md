@@ -1,6 +1,16 @@
-# 01-React-ts 单个选项
+# 07-React-ts 单个选项
 
-## 1. 创建项目
+## 第一章 课程代码
+
+Git仓库地址: https://github.com/hemiahwu/07-react-ts-select
+
+百度网盘链接: https://pan.baidu.com/s/1mrQYCkoeCDva7UvLAiu-sA?pwd=h59n 提取码: h59n
+
+
+
+课程答疑微信: 
+
+<img src="https://i.postimg.cc/YCWHJWTw/Wechat-IMG233.jpg" alt="WechatIMG233"  />
 
 ### 1. 创建项目
 
